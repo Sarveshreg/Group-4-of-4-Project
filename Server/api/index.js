@@ -1,5 +1,6 @@
 require("dotenv").config();
 console.log(process.env.DATABASE_URL);
+console.log(process.env.JWT_SECRET);
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { getUserById } = require("./utilities");

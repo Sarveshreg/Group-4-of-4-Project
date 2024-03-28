@@ -53,12 +53,12 @@ router.post("/register", async (req, res) => {
 
 // Login
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { Email, Password } = req.body;
   try {
     const user = await prisma.users.findUnique({
-      where: { Email: email },
+      where: { Email },
     });
-    if (!user || !(await verifyPassword(password, user.Password))) {
+    if (!user || !(await verifyPassword(Password, user.Password))) {
       return res.status(401).json({ message: "Authentication failed." });
     }
     const token = generateToken(user);
