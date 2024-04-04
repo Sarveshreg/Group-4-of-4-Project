@@ -12,7 +12,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model Users {
   id           String    @id @default(uuid())
   FirstName    String
@@ -36,21 +35,23 @@ model Event {
   EventTitle       String
   Details          String    @db.Text
   MaximumAttendies Int
-  Picture          String?
+  Picture          String
   EventCreated     DateTime  @default(now())
   EventUpdated     DateTime  @updatedAt
   Creator          Users     @relation("creator", fields: [CreatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   CreatorId        String
   Comment          Comment[]
   RSVPUsers        RSVP[]
+  Latitude   Float?   // Add latitude field
+  Longitude  Float?   // Add longitude field
+  LocationDisplay String? // Human-readable address or location name
 }
 
 model RSVP {
-  users      Users   @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userID     String
-  User_fname String?
-  event      Event   @relation(fields: [eventID], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  eventID    String
+  users   Users  @relation(fields: [userID], references: [id])
+  userID  String
+  event   Event  @relation(fields: [eventID], references: [id])
+  eventID String
 
   @@id([userID, eventID])
 }
@@ -63,8 +64,8 @@ model RSVP {
 // }
 
 model Category {
-  event    Event  @relation(fields: [Event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  Event_id String @unique
+  event    Event          @relation(fields: [Event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Event_id String         @unique
   Category String
 
   @@id([Event_id, Category])
@@ -87,7 +88,6 @@ model Comment {
   Event_id   String
   user       Users    @relation(fields: [User_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   User_id    String
-  User_fname String
   Comment    String
   Created_at DateTime @default(now())
 }
