@@ -2,6 +2,7 @@ const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const sendMail=require("./email");
 
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -44,7 +45,11 @@ router.post("/register", async (req, res) => {
       data: { FirstName, LastName, Email, Password: hashedPassword, ZipCode },
     });
     const token = generateToken(newUser);
-    res.status(201).json({ token, user: { ...newUser, Password: undefined } });
+    sendMail(newUser,"Registration");
+    return res.status(201).json({ token, user: { ...newUser, Password: undefined } });
+    
+    //sendMail(newUser,"Registration").then((result)=>{result ? res.status(201).json({ token, user: { ...newUser, Password: undefined } }) : res.status(404)});
+
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ message: "Error during registration." });

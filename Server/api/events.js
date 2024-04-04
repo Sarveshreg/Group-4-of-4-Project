@@ -3,6 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const sendMail=require("./email");
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -97,6 +98,8 @@ router.post("/", authMiddleware, async (req, res) => {
         },
       },
     });
+    console.log("req.user",req.user);
+    // sendMail(event,"New Event")
     res.status(201).json(event);
   } catch (error) {
     console.error("Error creating event:", error);
