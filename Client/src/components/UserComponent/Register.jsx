@@ -13,8 +13,10 @@ function Register() {
     password: '',
     zipCode: '',
   });
+  let[fileInputState,setFileInputState]=useState("");
   let[emailError,setEmailError]=useState(false);
   let[registerError,setRegisterError]=useState(false);
+  let[previewSource,setPreviewSource]=useState("");
 
   const dispatch = useDispatch();
   let navigate=useNavigate();
@@ -34,6 +36,7 @@ function Register() {
     e.preventDefault();
     setEmailError(true);
     setRegisterError(true)
+    if(!previewSource) return;
     try {
       // Convert ZipCode from string to integer
       const payload = {
@@ -52,6 +55,7 @@ function Register() {
           Email: payload.email,
           Password: payload.password,
           ZipCode: payload.ZipCode, // Use the converted ZipCode
+          image:previewSource,
         }),
       });
   
@@ -59,6 +63,7 @@ function Register() {
       if (data.token) {
         dispatch(setToken(data.token));
         dispatch(setUser(data.user));
+        // uploadImage(previewSource);
         setEmailError(false);
         setRegisterError(false)
         navigate("/",{replace:true});
@@ -79,6 +84,22 @@ function Register() {
       // Handle error in form submission
     }
   };
+
+  let handleFileInputChange=(e)=>{
+    setFileInputState(e.target.files[0].file)    
+    let file=e.target.files[0];
+    previewFile(file);
+  }
+
+  let previewFile=(file)=>{
+    let reader=new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend=()=>{
+      setPreviewSource(reader.result);
+    }
+  }
+
+
 
 
   return (
@@ -131,7 +152,20 @@ function Register() {
             onChange={handleChange}
           />
         </div>
+        <div>
+          <label>Profile Picture</label>
+          <input
+            type="file"
+            accept='.png,.jpeg,.jpg'
+            name="ProfielPic"
+            value={fileInputState}
+            onChange={handleFileInputChange}
+          />
+        </div>
         <button type="submit">Register</button>
+        {previewSource && (
+          <img src={previewSource} alt="profile image" height={200} width={250}/>
+        )}
       </form>
     </>
   );

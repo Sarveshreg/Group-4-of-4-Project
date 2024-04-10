@@ -20,6 +20,7 @@ model Users {
   Email        String    @unique
   Password     String
   ZipCode      Int
+  ProfilePic   String?  
   EventCreated Event[]   @relation("creator")
   comment      Comment[]
   RSVPEvents   RSVP[]
@@ -55,6 +56,8 @@ model RSVP {
   userID     String
   User_fname String?
   UserEmail  String?
+  Userpic     String?
+  Pic         String?
   event      Event   @relation(fields: [eventID], references: [id], onDelete: Cascade, onUpdate: Cascade)
   eventID    String
 

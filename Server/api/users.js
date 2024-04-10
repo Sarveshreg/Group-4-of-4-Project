@@ -7,6 +7,7 @@ const sendMail=require("./email");
 const prisma = new PrismaClient();
 const router = express.Router();
 const authMiddleware = require("./authMiddleware");
+let {cloudinary}=require("./cloudinary");
 
 // Utility functions
 const hashPassword = async (password) => bcrypt.hash(password, 10);
@@ -74,7 +75,7 @@ const generateToken = (user) =>
 
 // Register a new user
 router.post("/register", async (req, res) => {
-  const { FirstName, LastName, Email, Password, ZipCode } = req.body;
+  const { FirstName, LastName, Email, Password, ZipCode,image } = req.body;
   try {
     const existingUser = await prisma.users.findUnique({ where: { Email } });
     if (existingUser) {
@@ -85,8 +86,20 @@ router.post("/register", async (req, res) => {
       data: { FirstName, LastName, Email, Password: hashedPassword, ZipCode },
     });
     const token = generateToken(newUser);
+    let uploadedResponse=await cloudinary.uploader.upload(image,{
+      upload_preset:"ProfileImage"
+    })
+
+    let userPicUpdate=await prisma.users.update({
+      where:{
+        id:newUser.id,
+      },
+      data:{
+        ProfilePic:uploadedResponse.secure_url
+      }
+    }) 
     sendMail(newUser,"Registration");
-    res.status(201).json({ token, user: { ...newUser, Password: undefined } });
+    res.status(201).json({ token, user: { ...userPicUpdate, Password: undefined } });
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ message: "Error during registration." });

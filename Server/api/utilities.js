@@ -44,11 +44,14 @@ function verifyToken(token) {
   }
 }
 
+
+
 module.exports = {
   getUserById,
   getUserByEmail,
   hashPassword,
   verifyPassword,
   generateToken,
-  verifyToken
+  verifyToken,
+  
 };

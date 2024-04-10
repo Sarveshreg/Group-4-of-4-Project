@@ -10,14 +10,15 @@ const authMiddleware = require("./authMiddleware");
 router.post("/:eventId", authMiddleware, async (req, res) => {
   const { eventId } = req.params;
   const userId = req.user.id;
-  let { User_fname,UserEmail,EventTitle } = req.body;
+  let { User_fname,UserEmail,EventTitle,ProfilePic } = req.body;
   try {
     const rsvp = await prisma.RSVP.create({
       data: {
         userID: userId,
         eventID: eventId,
         User_fname,
-        UserEmail
+        UserEmail,
+        Userpic:ProfilePic
       },
     });
     sendMail({...rsvp,EventTitle},"RSVP Received")
