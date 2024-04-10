@@ -20,6 +20,7 @@ function SingleEvent() {
     let userId=useSelector((state)=>state.auth.user.id);
     let User_fname=useSelector((state)=>state.auth.user.FirstName);
     let UserEmail=useSelector((state)=>state.auth.user.Email);
+    let ProfilePic=useSelector((state)=>state.auth.user.ProfilePic);
     let token=useSelector((state)=>state.auth.token);
     let[eventDetail,setEventDetail]=useState({});
     //let[userComment,setUserComment]=useState(null);
@@ -93,6 +94,7 @@ function SingleEvent() {
         body:JSON.stringify({
           User_fname,
           UserEmail,
+          ProfilePic,
           EventTitle:eventDetail.EventTitle,
 
         })
@@ -199,7 +201,7 @@ let cancelRsvp= async ()=>{
         {eventDetail && 
         <span>
           <div><strong>{eventDetail.EventTitle}</strong>{(userId==eventDetail.CreatorId) &&<span><button onClick={(e)=>deleteEvent()}>Delete</button> <button onClick={(e)=>navigate("/event/update", {state:eventDetail})}>Update</button> </span>}</div>
-          <img src="https://www.discoverhongkong.com/content/dam/dhk/intl/what-s-new/events/events-festivals-720x860.jpg" alt="picture of an event" width={400} height={400} />
+          <img src={eventDetail.Picture} alt="picture of an event" width={400} height={400} />
           <p><strong>Detail:</strong> {eventDetail.Details}</p>
           <p><strong>Category:</strong> {eventDetail.category.Category}</p>
           <span><strong>Location: </strong>
@@ -228,7 +230,7 @@ let cancelRsvp= async ()=>{
                   {eventDetail.RSVPUsers && eventDetail.RSVPUsers.map(user=>
                     <i key={user.userID}>
                       <div>
-                        <img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="profile pic" height={50} width={50} />
+                        <img src={user.Userpic} alt="profile pic" height={50} width={50} />
                       <div> {user.User_fname} </div> 
                       </div>              
                     </i>

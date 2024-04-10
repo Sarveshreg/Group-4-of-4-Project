@@ -69,7 +69,7 @@ const EventMap = ({ events }) => {
                 className="info-window-img"
               />
             )}
-            <p>{selectedEvent.Details}</p>
+            <p>{selectedEvent.Details.slice(0,50)}...</p>
             <p>Date and Time: {new Date(selectedEvent.Date).toLocaleString()}</p>
           </div>
         </InfoWindow>

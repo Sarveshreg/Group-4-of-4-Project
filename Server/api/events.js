@@ -5,16 +5,8 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const sendMail=require("./email");
-const multer  = require('multer');
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    return cb(null, 'pictures/')
-  },
-  filename: function (req, file, cb) {
-    return cb(null, `${req.user.id}.png`);
-  }
-});
-const upload = multer({ storage: storage });
+let {cloudinary}=require("./cloudinary");
+
 
 const authMiddleware = require("./authMiddleware");
 
@@ -50,13 +42,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/event-pic/:id", authMiddleware,upload.single('picture'), async (req, res) => {
-  console.log("req.body.data is",req.id);
-  res.send(req.body);
-});
 
 // Create a new event - this route requires authentication
-router.post("/", authMiddleware,upload.single('picture'), async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
 
   const {
     Date,
@@ -69,9 +57,10 @@ router.post("/", authMiddleware,upload.single('picture'), async (req, res) => {
     Time,
     MaximumAttendies,
     category,
-    // Picture,
+    Picture,
     CreatorName,
-    CreatorEmail
+    CreatorEmail,
+    CreatorPicture
   } = req.body;
   const DateTime = Date + "T" + Time + ":00.000z";
 
@@ -106,7 +95,7 @@ router.post("/", authMiddleware,upload.single('picture'), async (req, res) => {
         ZipCode: parseInt(ZipCode),
         EventTitle,
         Details,
-        Picture:"demo",
+        Picture:"https://www.discoverhongkong.com/content/dam/dhk/intl/what-s-new/events/events-festivals-720x860.jpg",
         CreatorEmail,
         CreatorName,
         MaximumAttendies: parseInt(MaximumAttendies),
@@ -121,6 +110,7 @@ router.post("/", authMiddleware,upload.single('picture'), async (req, res) => {
             User_fname: CreatorName,
             UserEmail:CreatorEmail,
             userID:req.user.id,
+            Userpic:CreatorPicture
           }
         },
         Latitude: latitude,
@@ -129,6 +119,20 @@ router.post("/", authMiddleware,upload.single('picture'), async (req, res) => {
         LocationDisplay: address,
       },
     });
+    if(event.id){
+      let uploadedResponse=await cloudinary.uploader.upload(Picture,{
+        upload_preset:"EventImage"
+      });
+      console.log("uploadedResponse",uploadedResponse);
+      let eventPicUpdate=await prisma.event.update({
+        where:{
+          id:event.id,
+        },
+        data:{
+          Picture:uploadedResponse.secure_url
+        }
+      }) 
+    }
     sendMail(event,"New Event");    
     res.status(201).json(event);
   } catch (error) {

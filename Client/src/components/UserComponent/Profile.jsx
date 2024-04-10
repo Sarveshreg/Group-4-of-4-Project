@@ -140,6 +140,7 @@ function Profile() {
       {error && <div>Error: {error}</div>}
       {profileData && (
         <div>
+          <img src={profileData.ProfilePic} alt="prifile image" height={200} width={200} />
           <p>Email: {profileData.Email}</p>
           <p>First Name: {profileData.FirstName}</p>
           <p>Last Name: {profileData.LastName}</p>
