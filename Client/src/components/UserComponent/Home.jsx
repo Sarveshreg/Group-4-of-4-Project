@@ -8,11 +8,13 @@ import axios from 'axios';
 
 function Home() {
   const [events, setEvents] = useState([]);
+  let API_Link=import.meta.env.VITE_API_LINK;
+
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/events');
+        const response = await axios.get(API_Link+'events');
         setEvents(response.data); // Adjust based on your actual API response structure
       } catch (error) {
         console.error('Failed to fetch events:', error);
