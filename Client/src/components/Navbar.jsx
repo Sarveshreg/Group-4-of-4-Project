@@ -8,17 +8,27 @@ function Navbar() {
   let token=useSelector((state)=>state.auth.token);
   let dispatch = useDispatch()
   return (
-    <span>
-      <NavLink to="/"> Home</NavLink>
-      {token && <span>
-      <NavLink to="/profile"> Profile</NavLink>
-      <NavLink to="/createevent"> Create-Event</NavLink>
+    <span className="header">
+      <NavLink  className={({ isActive, isPending }) =>
+        isPending ? "pending" : isActive ? "active" : "not-active"
+        } to="/"> Home</NavLink>
+      {token && <span className='flex gap-6'>
+      <NavLink className={({ isActive, isPending }) =>
+        isPending ? "pending" : isActive ? "active" : "not-active"
+        } to="/profile"> Profile</NavLink>
+      <NavLink className={({ isActive, isPending }) =>
+        isPending ? "pending" : isActive ? "active" : "not-active"
+        } to="/createevent"> Create-Event</NavLink>
       <button onClick={(e)=>dispatch(clearToken())}>Logout</button>
       </span>
       }
-      {!token && <span>
-      <NavLink to="/login"> Login</NavLink>
-      <NavLink to="/register"> Register</NavLink>
+      {!token && <span className='flex gap-6'>
+      <NavLink className={({ isActive, isPending }) =>
+        isPending ? "pending" : isActive ? "active" : "not-active"
+        } to="/login"> Login</NavLink>
+      <NavLink className={({ isActive, isPending }) =>
+        isPending ? "pending" : isActive ? "active" : "not-active"
+        } to="/register"> Register</NavLink>
       </span>
       }
     </span>

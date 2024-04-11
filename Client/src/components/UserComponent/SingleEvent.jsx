@@ -200,7 +200,7 @@ let cancelRsvp= async ()=>{
     <div>
         {eventDetail && 
         <span>
-          <div><strong>{eventDetail.EventTitle}</strong>{(userId==eventDetail.CreatorId) &&<span><button onClick={(e)=>deleteEvent()}>Delete</button> <button onClick={(e)=>navigate("/event/update", {state:eventDetail})}>Update</button> </span>}</div>
+          <div><strong>{eventDetail.EventTitle}</strong>{(userId==eventDetail.CreatorId) &&<span><button className="btn" onClick={(e)=>deleteEvent()}>Delete</button> <button className="btn" onClick={(e)=>navigate("/event/update", {state:eventDetail})}>Update</button> </span>}</div>
           <img src={eventDetail.Picture} alt="picture of an event" width={400} height={400} />
           <p><strong>Detail:</strong> {eventDetail.Details}</p>
           <p><strong>Category:</strong> {eventDetail.category.Category}</p>
@@ -211,16 +211,11 @@ let cancelRsvp= async ()=>{
           <p><strong>Date and Time:</strong> {dateTime.Date} @ {dateTime.Time} CST</p>
           <p><strong>Maximum Attendees:</strong> {eventDetail.MaximumAttendies}</p>
           <p><strong>RSVP:</strong> Required</p>
-          {/* {token && 
-          <span><button disabled={RsvpDisable} onClick={(e)=>{sendRsvp()}}>I would like to attend</button> {rsvpError && <span>Unable to RSVP!</span>}</span>
-          } */}
-          <>
-          {/* Event details... */}
-        </>
+
           {token && <span>
-              {RsvpDisable && <button disabled={RsvpDisable}>RSVP</button>}
-              {!RsvpDisable && <button onClick={(e)=>{sendRsvp()}}> RSVP</button>}
-              {cancelBtn && <button onClick={(e)=>{cancelRsvp()}}> Cancel RSVP</button>}
+              {RsvpDisable && <button className="btn" disabled={RsvpDisable}>RSVP</button>}
+              {!RsvpDisable && <button className="btn" onClick={(e)=>{sendRsvp()}}> RSVP</button>}
+              {cancelBtn && <button className="btn" onClick={(e)=>{cancelRsvp()}}> Cancel RSVP</button>}
             </span>}
           <p><strong>Created By: </strong>{eventDetail.CreatorName}</p>
 
@@ -243,7 +238,7 @@ let cancelRsvp= async ()=>{
               {token &&
                 <span>
                 <textarea rows={3} cols={30} ref={c} ></textarea>
-                <button onClick={()=>postComment()}>Post</button>
+                <button className="btn" onClick={()=>postComment()}>Post</button>
                 <span>{commentError && <p>Unable to post comment</p>}</span>
               </span>
               }
@@ -264,7 +259,7 @@ let cancelRsvp= async ()=>{
                 <Marker position={{ lat: parseFloat(eventDetail.Latitude), lng: parseFloat(eventDetail.Longitude) }} />
               </GoogleMap>
                     )}
-                    <button ><a target='_blank' href={`https://www.google.com/maps/search/?api=1&query=${eventDetail.Latitude}%2c${eventDetail.Longitude}`} >Get Direction</a></button>
+                    <button className="btn" ><a target='_blank' href={`https://www.google.com/maps/search/?api=1&query=${eventDetail.Latitude}%2c${eventDetail.Longitude}`} >Get Direction</a></button>
         
         </span>
         }

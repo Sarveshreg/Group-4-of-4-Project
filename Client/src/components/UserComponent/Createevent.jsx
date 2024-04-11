@@ -122,7 +122,7 @@ function Createevent() {
         <label>Maximum Attendees: <input type="number" value={maxAttendees} min={1} onChange={(e)=>setMaxAttendees(e.target.value)}/></label><br />
         <label>Detail: <textarea rows={4} cols={50} value={detail} onChange={(e)=>setDetail(e.target.value)} /></label><br />
         <label> Picture: <input name="eventPicture" type="file"  accept='.png,.jpeg,.jpg'  value={fileInputState} onChange={handleFileInputChange}/></label><br />
-        <button type='submit'>Submit</button>
+        <button className="btn" type='submit'>Submit</button>
         {/* <button onClick={(e)=>EventSubmit(e)}>Submit</button> */}
       </form>
     </div>

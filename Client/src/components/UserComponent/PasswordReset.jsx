@@ -93,19 +93,19 @@ function PasswordReset() {
         <div>
             <div>Enter the email associated with your account</div>
             <label>Email: <input value={Email} onChange={(e)=>setEmail(e.target.value)} type="email" /></label>
-            <button onClick={()=>sendEmail()}>Submit</button>
+            <button className="btn" onClick={()=>sendEmail()}>Submit</button>
         </div>}
         {otpPhase && 
         <div>
             <div>Enter OTP that was sent to your email({Email})</div>
             <label>OTP: <input value={OTP} onChange={(e)=>setOTP(e.target.value)} type="string" /></label>
-            <button onClick={()=>sendOTP()}>Submit</button>
+            <button className="btn" onClick={()=>sendOTP()}>Submit</button>
         </div>}
         {passwordPhase && 
         <div>
             <div>Enter new password({Email})</div>
             <label>Password: <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" /></label>
-            <button onClick={()=>sendPassword()}>Submit</button>
+            <button className="btn" onClick={()=>sendPassword()}>Submit</button>
             {tooShort && <p>Password too short!</p>}
         </div>}
         

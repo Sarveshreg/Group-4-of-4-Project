@@ -11,11 +11,11 @@ function App() {
 
 
   return (
-    <>
+    <div className='main'>
       <Navbar />
       <Maincontent />
       <Footer />
-    </>
+    </div>
   )
 }
 
