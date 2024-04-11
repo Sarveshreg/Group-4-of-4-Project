@@ -23,8 +23,10 @@ function Home() {
   }, []);
 
   return (
+
     <div className='main'>
       <h1>Events Near You</h1>
+
       {/* Ensure events are passed down as props */}
       <EventMap events={events} />
     </div>
