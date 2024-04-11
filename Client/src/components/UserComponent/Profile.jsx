@@ -150,7 +150,7 @@ function Profile() {
           <ul>
             {!createdEvents && <p>NO Event Created!</p>}
             {createdEvents && createdEvents.map(event => (
-              <li key={event.id}>{event.EventTitle} <button onClick={(e)=>eventDetail(event.id)}>Detail</button> <button onClick={(e)=>deleteEvent(event.id)}>Delete</button></li>
+              <li key={event.id}>{event.EventTitle} <button className="btn" onClick={(e)=>eventDetail(event.id)}>Detail</button> <button className="btn" onClick={(e)=>deleteEvent(event.id)}>Delete</button></li>
             ))}
           </ul>
 
@@ -160,7 +160,7 @@ function Profile() {
           {rsvpCancel && <p>RSVP Cancelled!</p>}
           <ul>
             {RsvpEvents && RsvpEvents.map(event => (
-              <li key={event.eventID}>{event.event.EventTitle} <button onClick={(e)=>eventDetail(event.eventID)}>Detail</button>{(event.event.CreatorId!=id) && <button onClick={(e)=>{cancelRsvp(event.eventID)}}>Cancel RSVP</button>}</li>
+              <li key={event.eventID}>{event.event.EventTitle} <button className="btn" onClick={(e)=>eventDetail(event.eventID)}>Detail</button>{(event.event.CreatorId!=id) && <button className="btn" onClick={(e)=>{cancelRsvp(event.eventID)}}>Cancel RSVP</button>}</li>
             ))}
           </ul>
 

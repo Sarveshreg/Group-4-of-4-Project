@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +65,127 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  font-family: Arial, sans-serif;
+  margin:0 auto;
+  padding: 0;
+  background-color: #ef01c335;
+  min-height: 1000px !important;
+  width: 100vw; 
+}
+.main{
+  min-height: 1000px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  background-color: whitesmoke;
+}
+
+.header {
+  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #F77737, #FCAF45, #FFDC80);
+  color: #e34f6a50;
+  padding: auto;
+  color: rgb(10, 1, 1);
+  font-weight: 900;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 80px;
+  font-size: 30px;
+ font-weight: 500;
+}
+
+.header nav ul {
+  list-style: none;
+  margin: 10px;
+  padding: 1opx;
+  display: flex;
+}
+
+.header nav ul li {
+  margin-right: 1rem;
+}
+
+.header nav ul li:last-child {
+  margin-right: 0;
+}
+
+.header nav ul li a,
+.header nav ul li button {
+  color: #1896df;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li button a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.hero {
+  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #F77737, #FCAF45, #FFDC80);
+  padding: 4rem;
+  text-align: center;
+  color: #010000;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  background-color: #3498db; 
+  color: #726e6e;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border: 2px solid #3498db; 
+  border-radius: 20px; 
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s; 
+}
+
+.btn:hover {
+  background-color: #2980b9; 
+  border-color: #2980b9; 
+}
+
+.footer {
+  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #F77737, #FCAF45, #FFDC80);
+  color: #ab4646;
+  padding: 1rem;
+  text-align: center;
+}
+
+.active:hover{
+  color: #11e22d;
+}
+
+.pending:hover{
+  color: #833AB4;
+}
+
+.not-active:hover{
+  color: #1896df;
 }

@@ -162,7 +162,7 @@ function Register() {
             onChange={handleFileInputChange}
           />
         </div>
-        <button type="submit">Register</button>
+        <button className="btn" type="submit">Register</button>
         {previewSource && (
           <img src={previewSource} alt="profile image" height={200} width={250}/>
         )}

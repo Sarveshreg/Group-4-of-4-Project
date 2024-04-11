@@ -101,8 +101,8 @@ function EventUpdate() {
             <label>Zip Code: <input type="number" value={event.ZipCode} onChange={(e)=>setEvent({...event,ZipCode:(e.target.value)})}/></label><br /> 
             <label>Maximum Attendees: <input type="number" value={event.MaximumAttendies} min={1} onChange={(e)=>setEvent({...event,MaximumAttendies:(e.target.value)})}/></label><br />
             <label>Detail: <textarea rows={4} cols={50} value={event.Details} onChange={(e)=>setEvent({...event,Details:(e.target.value)})} /></label><br />
-            <label> Picture: <input type="text" value={event.Picture} onChange={(e)=>setEvent({...event,Picture:(e.target.value)})}/></label><br />
-            <button onClick={(e)=>EventUpdate(e)}>Update</button> 
+            <label> Picture: <img src={event.Picture} height={250} width={300}/></label><br />
+            <button className="btn" onClick={(e)=>EventUpdate(e)}>Update</button> 
         </form>
     </div>
     )
