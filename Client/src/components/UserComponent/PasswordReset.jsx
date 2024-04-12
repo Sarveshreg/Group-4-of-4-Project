@@ -13,8 +13,10 @@ function PasswordReset() {
     let[tooShort,setTooShort]=useState(false);
     let navigate=useNavigate();
     let API_Link=import.meta.env.VITE_API_LINK;
+    let[otpError,setOtpError]=useState(flase)
 
     let sendEmail=async()=>{
+        setOtpError(true)
         try {
             let response= await fetch (API_Link+"users/otpgen",{
                 method: "POST",
@@ -26,9 +28,13 @@ function PasswordReset() {
                 }),
             });
             let result= await response.json();
-            if(result.message){
+            if(result.message=="Email sent"){
                 setOtpPhase(true);
                 setEmailPhase(false);
+                setOtpError(false)
+            }
+            else{
+                //do nothing
             }
         } catch (error) {
             console.error(error)
@@ -96,6 +102,7 @@ function PasswordReset() {
             <p>Enter the email associated with your account</p>
             <label>Email: <input value={Email} onChange={(e)=>setEmail(e.target.value)} type="email" /></label>
             <button className="btn" onClick={()=>sendEmail()}>Submit</button>
+            {otpError && <p>Email does not exist in our record!</p>}
         </div>}
         {otpPhase && 
         <div>
