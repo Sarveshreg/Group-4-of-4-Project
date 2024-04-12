@@ -22,6 +22,9 @@ const generateToken = (user) =>
       const user = await prisma.users.findUnique({
         where: { Email },
       });
+      if(!user.Email){
+        res.status(404).json({message:false})
+      }
   
       function getRandomInt(min, max) {
         const minCeiled = Math.ceil(min);
@@ -65,6 +68,9 @@ const generateToken = (user) =>
         });
         let token = generateToken(user);
         res.json({ token, user: { ...user, Password: undefined } });
+      }
+      else{
+        res.json({error:"OTP match fail"})
       }
 
     } catch (error) {
