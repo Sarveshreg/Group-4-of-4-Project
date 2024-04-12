@@ -305,11 +305,12 @@ img{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: center;
-  margin-left: 35vw;
   margin-bottom: 10px;
+  align-content: center;
 }
+
 
 .rsvp_card{
   display: flex;
