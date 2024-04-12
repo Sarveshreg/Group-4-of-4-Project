@@ -81,12 +81,12 @@ function EventUpdate() {
       }
 
   return (
-    <div>
-        {updateError && <p>Unable to Update. Please make sure all fields are filled out correctly.</p>}
-        {addressError && <p>Invalid Address</p>}
-        <h3>Update your Event</h3>
-        <form>
-            <label>Title: <input type="text" value={event.EventTitle} onChange={(e)=>setEvent({...event,EventTitle:(e.target.value)})}/> </label><br />
+    <div className='main'>
+        {updateError && <p className='error'>Unable to Update. Please make sure all fields are filled out correctly.</p>}
+        {addressError && <p className='error'>Invalid Address</p>}
+        <h1>Update Event</h1>
+        <form className='form'>
+            <label>Title: <input type="text" value={event.EventTitle} onChange={(e)=>setEvent({...event,EventTitle:(e.target.value)})}/> </label>
                 <label>Category: 
                     <select value={event.category.Category} onChange={(e)=>setEvent({...event,category:(e.target.value)})}>
                     <option value="ARTS">Arts</option>
@@ -98,16 +98,16 @@ function EventUpdate() {
                     <option value="RELIGIOUS">Religious</option>
                     <option value="POLITICAL">Political</option>
                     </select>
-            </label><br /> 
-            <label>Date: <input type="date" min={startDate} max="2030-12-12" value={event.Date} onChange={(e)=>setEvent({...event,Date:(e.target.value)})}/></label><br />
-            <label>Time: <input type="time" value={event.Time} onChange={(e)=>setEvent({...event,Time:(e.target.value)})} /></label><br />
-            <label>Street Address: <input type="text" value={event.Street} onChange={(e)=>setEvent({...event,Street:(e.target.value)})} /></label><br />
-            <label>City: <input type="text" value={event.City} onChange={(e)=>setEvent({...event,City:(e.target.value)})} /></label><br />
-            <label>State: <input type="text" value={event.State} onChange={(e)=>setEvent({...event,State:(e.target.value)})}/></label><br />
-            <label>Zip Code: <input type="number" value={event.ZipCode} onChange={(e)=>setEvent({...event,ZipCode:(e.target.value)})}/></label><br /> 
-            <label>Maximum Attendees: <input type="number" value={event.MaximumAttendies} min={1} onChange={(e)=>setEvent({...event,MaximumAttendies:(e.target.value)})}/></label><br />
-            <label>Detail: <textarea rows={4} cols={50} value={event.Details} onChange={(e)=>setEvent({...event,Details:(e.target.value)})} /></label><br />
-            <label> Picture: <img src={event.Picture} height={250} width={300}/></label><br />
+            </label>
+            <label>Date: <input type="date" min={startDate} max="2030-12-12" value={event.Date} onChange={(e)=>setEvent({...event,Date:(e.target.value)})}/></label>
+            <label>Time: <input type="time" value={event.Time} onChange={(e)=>setEvent({...event,Time:(e.target.value)})} /></label>
+            <label>Street Address: <input type="text" value={event.Street} onChange={(e)=>setEvent({...event,Street:(e.target.value)})} /></label>
+            <label>City: <input type="text" value={event.City} onChange={(e)=>setEvent({...event,City:(e.target.value)})} /></label>
+            <label>State: <input type="text" value={event.State} onChange={(e)=>setEvent({...event,State:(e.target.value)})}/></label>
+            <label>Zip Code: <input type="number" value={event.ZipCode} onChange={(e)=>setEvent({...event,ZipCode:(e.target.value)})}/></label>
+            <label>Maximum Attendees: <input type="number" value={event.MaximumAttendies} min={1} onChange={(e)=>setEvent({...event,MaximumAttendies:(e.target.value)})}/></label>
+            <label>Detail: <textarea rows={4} cols={50} value={event.Details} onChange={(e)=>setEvent({...event,Details:(e.target.value)})} /></label>
+            <label> Picture: <img src={event.Picture} height={250} width={300}/></label>
             <button className="btn" onClick={(e)=>EventUpdate(e)}>Update</button> 
         </form>
     </div>

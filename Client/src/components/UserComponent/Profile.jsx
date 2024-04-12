@@ -134,23 +134,25 @@ function Profile() {
   }
 
   return (
-    <div>
-      <h2>User Profile</h2>
+    <div className='main'>
+      <h1>User Profile</h1>
       {/* {!token && <p>No token</p>} */}
       {error && <div>Error: {error}</div>}
       {profileData && (
         <div>
-          <img src={profileData.ProfilePic} alt="prifile image" height={200} width={200} />
-          <p>Email: {profileData.Email}</p>
-          <p>First Name: {profileData.FirstName}</p>
-          <p>Last Name: {profileData.LastName}</p>
-          <p>Location: {profileData.ZipCode}</p>
+          <div className='user_detail_card'>
+            <img src={profileData.ProfilePic} alt="prifile image" height={200} width={200} />
+            <p><span className='user_detail'>Email: </span> {profileData.Email}</p>
+            <p><span className='user_detail'>First Name: </span>{profileData.FirstName}</p>
+            <p><span className='user_detail'>Last Name: </span>{profileData.LastName}</p>
+            <p><span className='user_detail'>Location: </span>{profileData.ZipCode}</p>
+          </div>
           {/* Display events created */}
           <h3>Events Created</h3>
-          <ul>
+          <ul className='event_list'>
             {!createdEvents && <p>NO Event Created!</p>}
             {createdEvents && createdEvents.map(event => (
-              <li key={event.id}>{event.EventTitle} <button className="btn" onClick={(e)=>eventDetail(event.id)}>Detail</button> <button className="btn" onClick={(e)=>deleteEvent(event.id)}>Delete</button></li>
+              <li className='list_title' key={event.id}>{event.EventTitle}<button className="cancel" onClick={(e)=>deleteEvent(event.id)}>Delete</button> <button className="btn" onClick={(e)=>eventDetail(event.id)}>Detail</button></li>
             ))}
           </ul>
 
@@ -158,27 +160,11 @@ function Profile() {
           <h3>Events RSVP'd</h3>
           {rsvpError && <p>Unable to cancel RSVP!</p>}
           {rsvpCancel && <p>RSVP Cancelled!</p>}
-          <ul>
+          <ul className='event_list'>
             {RsvpEvents && RsvpEvents.map(event => (
-              <li key={event.eventID}>{event.event.EventTitle} <button className="btn" onClick={(e)=>eventDetail(event.eventID)}>Detail</button>{(event.event.CreatorId!=id) && <button className="btn" onClick={(e)=>{cancelRsvp(event.eventID)}}>Cancel RSVP</button>}</li>
+              <li className='list_title' key={event.eventID}>{event.event.EventTitle} {(event.event.CreatorId!=id) && <button className="cancel" onClick={(e)=>{cancelRsvp(event.eventID)}}>Cancel RSVP</button>} <button className="btn" onClick={(e)=>eventDetail(event.eventID)}>Detail</button></li>
             ))}
           </ul>
-
-          {/* Display current connections */}
-          <h3>Current Connections</h3>
-          {/* <ul>
-            {profileData.connections.map(connection => (
-              <li key={connection.id}>{connection.name}</li>
-            ))}
-          </ul> */}
-
-          {/* Display connection requests */}
-          <h3>Connection Requests</h3>
-          {/* <ul>
-            {profileData.connectionRequests.map(request => (
-              <li key={request.id}>{request.name}</li>
-            ))}
-          </ul> */}
         </div>
       )}
     </div>

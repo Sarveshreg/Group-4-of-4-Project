@@ -87,7 +87,7 @@ body{
   justify-content: flex-start;
   flex-wrap: nowrap;
   align-items: stretch;
-  background-color: whitesmoke;
+  background-color: #d0d0f5;
 }
 
 .header {
@@ -149,25 +149,43 @@ h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
+h2 {
+  font-size: 1.75rem;
+  /* margin-bottom: 1rem; */
+}
+
+h3{
+  font-size: 1.6rem;
+  text-decoration: underline;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
 
 p {
   font-size: 1.2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .btn {
   background-color: #3498db; 
-  color: #726e6e;
-  padding: 1rem 2rem;
-  font-size: 1rem;
+  color: black;
+  font-size: 1.25rem;
   border: 2px solid #3498db; 
   border-radius: 20px; 
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s; 
+  max-width:fit-content ;min-width: 80px;
+  height: fit-content;
+  padding:5px;
+  margin: 5px;
 }
 
 .btn:hover {
   background-color: #2980b9; 
+  border-color: #2980b9; 
+}
+.btn:active{
+  background-color: rgb(25, 238, 174); 
   border-color: #2980b9; 
 }
 
@@ -178,8 +196,8 @@ p {
   text-align: center;
 }
 
-.active:hover{
-  color: #11e22d;
+.active{
+  color: #f1e20a;
 }
 
 .pending:hover{
@@ -189,3 +207,207 @@ p {
 .not-active:hover{
   color: #1896df;
 }
+
+.mapBox{
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #d0d0f5;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: 2vh;
+  row-gap: 2vh;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.logout:hover{
+  background-color: rgb(226, 44, 44);  
+}
+.logout:active{
+  background-color: rgb(208, 226, 44);  
+}
+.logout{
+  
+  border-radius: 5px;
+  padding: 1px;
+}
+
+.error{
+  color: red;
+}
+
+img{
+
+  margin: auto;
+  border: 1px solid black;
+  padding:10px;
+  border-radius: 5px;
+  margin-bottom: 10px !important
+}
+.cancel{
+  background-color: #f5bfbf; 
+  color: black;
+  font-size: 1.25rem;
+  border: 2px solid #3498db; 
+  border-radius: 20px; 
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s; 
+  width: fit-content;
+  height: fit-content;
+  margin: 5px;
+  padding: 5px;
+}
+
+.cancel:active{
+  border: 5px solid red;
+}
+.cancel:hover{
+  background-color: #f58383;
+  
+}
+
+.list_title{
+  color: black;
+  font-size: 1.5rem;
+  font-style: italic;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+  row-gap: 10px;
+  border-bottom:0.25px solid #9caaf7;;
+  padding:5px
+}
+
+.list_title:hover{
+  border-bottom: 0.1px solid red;
+}
+
+.user_detail{
+  font-size: 1.5rem;
+}
+
+.user_detail_card{
+  display: flex;
+  flex-direction: column;
+}
+
+.create_event_form{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  margin-left: 35vw;
+  margin-bottom: 10px;
+}
+
+.rsvp_card{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  column-gap: 10px;
+}
+
+.micro_image{
+  padding:0;
+  margin: 0;
+  height: 50px;
+  width: 50px;
+}
+
+.comment_box{
+  display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 5px;
+    margin: 20px;
+}
+
+.comment_card{
+  display: flex;
+  flex-direction: column;
+  padding-left:50px;
+  padding-right:50px;
+  padding-top:10px
+}
+
+.comment_card_small {
+  display: flex;
+  margin: 0;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 20px;
+  border-bottom: 1px solid gray;
+  padding-top: 5px;
+  padding-bottom: 0;
+}
+
+.comment_card_small:hover{
+  background-color: #c4ccf7;
+}
+
+.small_map{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  row-gap: 5px;
+}
+
+.single_rsvp_card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event_list{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-left: 100px;
+  margin-right: 100px;
+  padding-left: 100px;
+  background-color: #c4ccf7;
+  border-radius: 20px;
+  row-gap: 5px;
+}
+
+.event_list:hover{
+  border: .25px solid pink;
+}
+
+.rsvp_div{
+  background-color: #c4ccf7;
+  border-radius: 20px;
+}
+
+.rsvp_div:hover{
+  background-color:  #b3bdf8;
+}
+
+a{
+  color: #332e2a;
+}
+
+.password_reset{
+display: flex;
+flex-direction: column;
+padding-bottom: 10px;
+}
+

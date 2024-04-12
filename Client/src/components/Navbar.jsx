@@ -2,11 +2,13 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import {useSelector,useDispatch} from "react-redux"
 import { clearToken } from '../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 function Navbar() {
   let token=useSelector((state)=>state.auth.token);
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
+  let navigate = useNavigate();
   return (
     <span className="header">
       <NavLink  className={({ isActive, isPending }) =>
@@ -19,7 +21,7 @@ function Navbar() {
       <NavLink className={({ isActive, isPending }) =>
         isPending ? "pending" : isActive ? "active" : "not-active"
         } to="/createevent"> Create-Event</NavLink>
-      <button onClick={(e)=>dispatch(clearToken())}>Logout</button>
+      <button className='logout' onClick={(e)=>{dispatch(clearToken());navigate(`/`,{replace:true})}}>Logout</button>
       </span>
       }
       {!token && <span className='flex gap-6'>
