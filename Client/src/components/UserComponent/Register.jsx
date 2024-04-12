@@ -35,10 +35,10 @@ function Register() {
   //handles form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
+    if(!previewSource || !formData.firstName || !formData.lastName || !formData.email || !formData.zipCode || !formData.password) return(setRegisterError(true));
     setEmailError(true);
-    setRegisterError(true)
-    if(!previewSource) return;
+    setLoading(true);
     try {
       // Convert ZipCode from string to integer
       const payload = {
@@ -72,7 +72,6 @@ function Register() {
         // Additional actions upon successful registration
       } else if (data.message=="Email is already in use.") {
         // Handle failed registration 
-        setRegisterError(true);
         setFormData({...formData,email:"",password:""})
       }
       else{
@@ -109,10 +108,11 @@ function Register() {
 
 
   return (
-    <>
-      {registerError && <p>Unable to register . Try again</p>}
-      {emailError && <p>Email already in use</p>}
-      <form onSubmit={handleSubmit}>
+    <div className='main'>
+      <h2>Register</h2>
+      {registerError && <p className='error'>Unable to register . Try again</p>}
+      {emailError && <p className='error'>Email already in use</p>}
+      <form  onSubmit={handleSubmit} className='form'>
         <div>
           <label>First Name</label>
           <input
@@ -173,7 +173,7 @@ function Register() {
           <img src={previewSource} alt="profile image" height={200} width={250}/>
         )}
       </form>
-    </>
+    </div>
   );
 }
 

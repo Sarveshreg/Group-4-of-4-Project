@@ -18,7 +18,7 @@ function Login() {
 
   async function handleSubmit(e){
     e.preventDefault();
-    setCredentialError(false);setServerError(false);setLoading(true)
+    setCredentialError(false);setServerError(false);
 
     //check to see if email and password meets all the parameters
     let emailPattern=/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
@@ -27,7 +27,7 @@ function Login() {
       setCredentialError(true);
       return null;
     }
-
+    setLoading(true)
     //make a call to the backend to login the user and get a token. Set the token in redux state
     try {
       let response= await fetch (API_Link+"users/login",{
@@ -64,15 +64,16 @@ function Login() {
 
   return (
 
-    <div>
-      <form>
+    <div className='main'>
+      <h2>Login</h2>
+      <form className='form'>
         <label >Email: <input type="text" onChange={(e)=>setEmail(e.target.value)} placeholder='email' value={email} /></label>
         <label > Password: <input type="password" onChange={(e)=>setPassword(e.target.value)} value={password} /></label>
         <button className="btn" onClick={(e)=>handleSubmit(e)}>Submit</button><br />
         <a href="/passwordreset">Forgot Password</a>
 
-        {credentialError && <p>Invalid email or password entered!</p>}
-        {serverError && <p>Unable to connect to the server!</p>}
+        {credentialError && <p className='error'>Invalid email or password entered!</p>}
+        {serverError && <p className='error'>Unable to connect to the server!</p>}
       </form>
     </div>
 

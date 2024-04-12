@@ -89,29 +89,29 @@ function PasswordReset() {
    
 
   return (
-    <>
-        <h4>Reset Password</h4>
+    <div className='password_reset' >
+        <h1>Reset Password</h1>
         {emailPhase && 
         <div>
-            <div>Enter the email associated with your account</div>
+            <p>Enter the email associated with your account</p>
             <label>Email: <input value={Email} onChange={(e)=>setEmail(e.target.value)} type="email" /></label>
             <button className="btn" onClick={()=>sendEmail()}>Submit</button>
         </div>}
         {otpPhase && 
         <div>
-            <div>Enter OTP that was sent to your email({Email})</div>
+            <p>Enter OTP that was sent to your email({Email})</p>
             <label>OTP: <input value={OTP} onChange={(e)=>setOTP(e.target.value)} type="string" /></label>
             <button className="btn" onClick={()=>sendOTP()}>Submit</button>
         </div>}
         {passwordPhase && 
         <div>
-            <div>Enter new password({Email})</div>
+            <p>Enter new password({Email})</p>
             <label>Password: <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" /></label>
             <button className="btn" onClick={()=>sendPassword()}>Submit</button>
             {tooShort && <p>Password too short!</p>}
         </div>}
         
-    </>
+    </div>
   )
 }
 

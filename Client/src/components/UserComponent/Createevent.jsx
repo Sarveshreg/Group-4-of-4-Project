@@ -111,12 +111,12 @@ function Createevent() {
 
   return (
 
-    <div>
-      <h3>Create an Event!</h3>
-      {pictureError && <p>All field needs to be filled out. And do not forget to attach a picture</p>}
-      {addressError && <p>Enter a valid address.</p>}
-      {previewSource && <img src={previewSource} height={200} width={250}/>}
-      <form onSubmit={EventSubmit}>
+    <div className='main'>
+      <h1>Create an Event!</h1>
+      {pictureError && <p className='error'>All field needs to be filled out. And do not forget to attach a picture</p>}
+      {addressError && <p className='error'>Enter a valid address.</p>}
+      {previewSource && <img src={previewSource} height={500} width={500}/>}
+      <form className="create_event_form" onSubmit={EventSubmit}>
         <label>Title: <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)} /></label><br />
         <label>Category: 
           <select value={category} onChange={(e)=>setCategory(e.target.value)}>

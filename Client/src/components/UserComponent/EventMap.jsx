@@ -3,8 +3,8 @@ import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '800px',
+  height: '800px'
 };
 
 const EventMap = ({ events }) => {
@@ -43,7 +43,8 @@ const EventMap = ({ events }) => {
   }
 
   return (
-  <GoogleMap
+    <div className='mapBox'>
+  <GoogleMap 
       mapContainerStyle={containerStyle}
       center={{ lat: userLocation.lat, lng: userLocation.lng }}
       zoom={10}
@@ -76,6 +77,7 @@ const EventMap = ({ events }) => {
       )}
       
     </GoogleMap>
+    </div>
   );
 };
 

@@ -130,7 +130,8 @@ let cancelRsvp= async ()=>{
     })
     let result=await response.json();
     if(result.eventID==id){
-      navigate(`/profile`,{replace:true});
+      alert("RSVP cancelled!");
+      navigate(`/`,{replace:true});
     }
     else{
       //do nothing
@@ -142,7 +143,11 @@ let cancelRsvp= async ()=>{
 }
 
     let postComment=async()=>{
-      setCommentError(true);setUpdatingComment(true);
+      setCommentError(true)
+      if(c.current.value.trim().length==0){
+        return 
+      }
+      setUpdatingComment(true);
       try {
         let response= await fetch(`${API_Link}events/${id}/comment`,{
         method:"POST",
@@ -183,7 +188,7 @@ let cancelRsvp= async ()=>{
           let result=await response.json();
           if(result.result){
             alert("Event deleted!");
-            navigate(`/profile`,{replace:true});
+            navigate(`/`,{replace:true});
           }
 
       } catch (error) {
@@ -203,71 +208,77 @@ let cancelRsvp= async ()=>{
 
 
   return (
-    <div>
+    <div className='main'>
         {eventDetail && 
         <span>
-          <div><strong>{eventDetail.EventTitle}</strong>{(userId==eventDetail.CreatorId) &&<span><button className="btn" onClick={(e)=>deleteEvent()}>Delete</button> <button className="btn" onClick={(e)=>navigate("/event/update", {state:eventDetail})}>Update</button> </span>}</div>
+          <div><h1>{eventDetail.EventTitle}</h1>{(userId==eventDetail.CreatorId) &&<span><button className="cancel" onClick={(e)=>deleteEvent()}>Delete</button> <button className="btn" onClick={(e)=>navigate("/event/update", {state:eventDetail})}>Update</button> </span>}</div>
           <img src={eventDetail.Picture} alt="picture of an event" width={400} height={400} />
-          <p><strong>Detail:</strong> {eventDetail.Details}</p>
-          <p><strong>Category:</strong> {eventDetail.category.Category}</p>
-          <span><strong>Location: </strong>
-              <div> {eventDetail.LocationDisplay}</div>
+          <p><span className='user_detail'>Detail:</span> {eventDetail.Details}</p>
+          <p><span className='user_detail'>Category:</span> {eventDetail.category.Category}</p>
+          <span><span className='user_detail'>Location: </span>
+              <p> {eventDetail.LocationDisplay}</p>
               
           </span>
-          <p><strong>Date and Time:</strong> {dateTime.Date} @ {dateTime.Time} CST</p>
-          <p><strong>Maximum Attendees:</strong> {eventDetail.MaximumAttendies}</p>
-          <p><strong>RSVP:</strong> Required</p>
+          <p><span className='user_detail'>Date and Time:</span> {dateTime.Date} @ {dateTime.Time} CST</p>
+          <p><span className='user_detail'>Maximum Attendees:</span> {eventDetail.MaximumAttendies}</p>
+          <p><span className='user_detail'>Created By: </span>{eventDetail.CreatorName}</p>
+          <p><span className='user_detail'>RSVP:</span> Required</p>
 
           {token && !updatingRsvp && <span>
               {RsvpDisable && <button className="btn" disabled={RsvpDisable}>RSVP</button>}
               {!RsvpDisable && <button className="btn" onClick={(e)=>{sendRsvp()}}> RSVP</button>}
-              {cancelBtn && <button className="btn" onClick={(e)=>{cancelRsvp()}}> Cancel RSVP</button>}
+              {cancelBtn && <button className="cancel" onClick={(e)=>{cancelRsvp()}}> Cancel RSVP</button>}
             </span>}
             {updatingRsvp && <p>Sending Your RSVP!</p>}
-          <p><strong>Created By: </strong>{eventDetail.CreatorName}</p>
-
-          <div>
-            <div><strong>People attending this event ({eventDetail.RSVPUsers && <span>{eventDetail.RSVPUsers.length}</span>}):</strong></div>
-            <span>
+          
+          <div className='rsvp_div'>
+            <div><h3>People attending this event ({eventDetail.RSVPUsers && <span>{eventDetail.RSVPUsers.length}</span>})</h3></div>
+            <span className='rsvp_card'>
                   {eventDetail.RSVPUsers && eventDetail.RSVPUsers.map(user=>
                     <i key={user.userID}>
-                      <div>
-                        <img src={user.Userpic} alt="profile pic" height={50} width={50} />
+                      <div className='single_rsvp_card'>
+                        <img className='micro_image' src={user.Userpic} alt="profile pic" height={100} width={100} />
                       <div> {user.User_fname} </div> 
                       </div>              
                     </i>
                   )}
             </span>
           </div>
+          {eventDetail.Latitude && eventDetail.Longitude && (
+            <div className='small_map'>
+                <GoogleMap
+                  mapContainerStyle={containerStyle}
+                  center={{ lat: eventDetail.Latitude, lng: eventDetail.Longitude }}
+                  zoom={15}
+                >
+                  <Marker position={{ lat: parseFloat(eventDetail.Latitude), lng: parseFloat(eventDetail.Longitude) }} />
+                </GoogleMap>
+                <button className="btn" ><a target='_blank' href={`https://www.google.com/maps/search/?api=1&query=${eventDetail.Latitude}%2c${eventDetail.Longitude}`} >Get Direction</a></button>
+              </div>
+                    )}                   
 
-          <div>
-            <h5>Comments:</h5>
+          <div >
+            <h3>Comments:</h3>
               {token &&
-                <span>
+                <span className="comment_box">
                 <textarea rows={3} cols={30} ref={c} ></textarea>
                 <button className="btn" onClick={()=>postComment()}>Post</button>
                 {updatingComment && <p>Posting Comment!</p>}
                 <span>{commentError && !updatingComment && <p>Unable to post comment</p>}</span>
               </span>
               }
+              <div className='comment_card'>
               {eventDetail.Comment && eventDetail.Comment.map(comment=>
                   <ol key={comment.id}>
-                    <span>{comment.User_fname}: </span>
-                    <span>{comment.Comment}</span>                
+                    <div className='comment_card_small'>
+                    <img className='micro_image' src={comment.User_pic} alt="user Pic" height={50} width={50}/>
+                    <span><strong>{comment.User_fname} : </strong> </span>
+                    <p>{comment.Comment}</p>  
+                    </div>              
                     </ol>
                   )}
+              </div>
           </div>
-          
-           {eventDetail.Latitude && eventDetail.Longitude && (
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={{ lat: eventDetail.Latitude, lng: eventDetail.Longitude }}
-                zoom={15}
-              >
-                <Marker position={{ lat: parseFloat(eventDetail.Latitude), lng: parseFloat(eventDetail.Longitude) }} />
-              </GoogleMap>
-                    )}
-                    <button className="btn" ><a target='_blank' href={`https://www.google.com/maps/search/?api=1&query=${eventDetail.Latitude}%2c${eventDetail.Longitude}`} >Get Direction</a></button>
         
         </span>
         }
