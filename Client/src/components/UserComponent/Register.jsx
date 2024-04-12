@@ -17,6 +17,7 @@ function Register() {
   let[emailError,setEmailError]=useState(false);
   let[registerError,setRegisterError]=useState(false);
   let[previewSource,setPreviewSource]=useState("");
+  let[loading,setLoading]=useState(false);
 
   const dispatch = useDispatch();
   let navigate=useNavigate();
@@ -34,6 +35,7 @@ function Register() {
   //handles form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setEmailError(true);
     setRegisterError(true)
     if(!previewSource) return;
@@ -83,6 +85,7 @@ function Register() {
       console.error('Error submitting form:', error);
       // Handle error in form submission
     }
+    setLoading(false);
   };
 
   let handleFileInputChange=(e)=>{
@@ -99,6 +102,9 @@ function Register() {
     }
   }
 
+  if(loading){
+    return(<p>Loading...</p>)
+  }
 
 
 

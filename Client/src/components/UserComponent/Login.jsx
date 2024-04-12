@@ -12,12 +12,13 @@ function Login() {
   let dispatch = useDispatch();
   let navigate=useNavigate();
   let API_Link=import.meta.env.VITE_API_LINK;
+  let[loading,setLoading]=useState(false);
 
 
 
   async function handleSubmit(e){
     e.preventDefault();
-    setCredentialError(false);setServerError(false);
+    setCredentialError(false);setServerError(false);setLoading(true)
 
     //check to see if email and password meets all the parameters
     let emailPattern=/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
@@ -53,7 +54,11 @@ function Login() {
       setServerError(true);setPassword("");   //reset the password field
     }
 
-    setPassword("");
+    setPassword("");setLoading(false);
+  }
+
+  if(loading){
+    return(<p>Loading...</p>)
   }
 
 

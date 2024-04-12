@@ -32,6 +32,8 @@ function SingleEvent() {
     let[cancelBtn,setCancelBtn]=useState(false);
     let [dateTime,setDateTime]=useState({});
     let API_Link=import.meta.env.VITE_API_LINK;
+    let[updatingRsvp,setUpdatingRSVP]=useState(false)
+    let[updatingComment,setUpdatingComment]=useState(false)
 
 
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
@@ -83,6 +85,7 @@ function SingleEvent() {
 
     let sendRsvp= async ()=>{
       setRsvpError(true);
+      setUpdatingRSVP(true);
 
       try {
         let response= await fetch(`${API_Link}rsvp/${id}`,{
@@ -110,6 +113,7 @@ function SingleEvent() {
       } catch (error) {
           console.error(error);
       }
+      setUpdatingRSVP(false)
 }
 let cancelRsvp= async ()=>{
   setRsvpError(true);
@@ -138,7 +142,7 @@ let cancelRsvp= async ()=>{
 }
 
     let postComment=async()=>{
-      setCommentError(true);
+      setCommentError(true);setUpdatingComment(true);
       try {
         let response= await fetch(`${API_Link}events/${id}/comment`,{
         method:"POST",
@@ -149,6 +153,7 @@ let cancelRsvp= async ()=>{
         body:JSON.stringify({
           Comment:c.current.value,
           User_fname,
+          ProfilePic,
         })
         })
         let result=await response.json();
@@ -163,6 +168,7 @@ let cancelRsvp= async ()=>{
       } catch (error) {
         console.error();(error);
       }
+      setUpdatingComment(false);
     }
 
     let deleteEvent=async()=>{
@@ -212,11 +218,12 @@ let cancelRsvp= async ()=>{
           <p><strong>Maximum Attendees:</strong> {eventDetail.MaximumAttendies}</p>
           <p><strong>RSVP:</strong> Required</p>
 
-          {token && <span>
+          {token && !updatingRsvp && <span>
               {RsvpDisable && <button className="btn" disabled={RsvpDisable}>RSVP</button>}
               {!RsvpDisable && <button className="btn" onClick={(e)=>{sendRsvp()}}> RSVP</button>}
               {cancelBtn && <button className="btn" onClick={(e)=>{cancelRsvp()}}> Cancel RSVP</button>}
             </span>}
+            {updatingRsvp && <p>Sending Your RSVP!</p>}
           <p><strong>Created By: </strong>{eventDetail.CreatorName}</p>
 
           <div>
@@ -239,7 +246,8 @@ let cancelRsvp= async ()=>{
                 <span>
                 <textarea rows={3} cols={30} ref={c} ></textarea>
                 <button className="btn" onClick={()=>postComment()}>Post</button>
-                <span>{commentError && <p>Unable to post comment</p>}</span>
+                {updatingComment && <p>Posting Comment!</p>}
+                <span>{commentError && !updatingComment && <p>Unable to post comment</p>}</span>
               </span>
               }
               {eventDetail.Comment && eventDetail.Comment.map(comment=>

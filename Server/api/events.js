@@ -144,7 +144,7 @@ router.post("/", authMiddleware, async (req, res) => {
 // Protected route to add a comment to an event
 router.post("/:id/comment", authMiddleware, async (req, res) => {
   const { id } = req.params;
-  const { Comment, User_fname } = req.body;
+  const { Comment, User_fname,ProfilePic } = req.body;
 
   try {
     const comment = await prisma.comment.create({
@@ -153,6 +153,7 @@ router.post("/:id/comment", authMiddleware, async (req, res) => {
         User_id: req.user.id,
         Comment,
         User_fname,
+        User_pic:ProfilePic
       },
     });
     res.status(201).json(comment);
