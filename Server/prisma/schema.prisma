@@ -20,10 +20,12 @@ model Users {
   Email        String    @unique
   Password     String
   ZipCode      Int
-  ProfilePic   String?  
+  ProfilePic   String?     
   EventCreated Event[]   @relation("creator")
-  comment      Comment[]
+  comment      Comment[]  
   RSVPEvents   RSVP[]
+
+  @@unique([id,ProfilePic])
 }
 
 model Event {
@@ -94,8 +96,9 @@ model Comment {
   id         String   @id @default(uuid())
   event      Event    @relation(fields: [Event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   Event_id   String
-  user       Users    @relation(fields: [User_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user       Users    @relation(fields: [User_id,User_pic], references: [id,ProfilePic], onDelete: Cascade, onUpdate: Cascade)
   User_id    String
+  User_pic  String
   User_fname String
   Comment    String
   Created_at DateTime @default(now())

@@ -23,6 +23,7 @@ function EventUpdate() {
     let[event,setEvent]=useState(location.state);
     let[addressError,setAddressError]=useState(false);
     let[updateError,setUpdateError]=useState(false);
+    let[loading,setLoading]=useState(false);
 
       //get current date and use it to set the minimum date limit on the calender
     let today=new Date();
@@ -35,10 +36,10 @@ function EventUpdate() {
     async function EventUpdate(e){
         e.preventDefault();
         setAddressError(false);
-        setUpdateError(false);
+        setUpdateError(false);setLoading(true)
         if(!(event.Date && event.Street && event.City && event.State && event.ZipCode && event.EventTitle && event.Details &&
             event.MaximumAttendies && event.Picture && event.Time && event.category)){
-
+                setLoading(false)
                 return(setUpdateError(true));
             }
         try {
@@ -65,6 +66,7 @@ function EventUpdate() {
                 setUpdateError(true);
             console.error(error);
             }
+            setLoading(false);
         }
 
     if(userId && userId!=location.state.CreatorId){
@@ -73,6 +75,10 @@ function EventUpdate() {
     if(!userId){
         return(<h4>You need to be logged in to view this page!</h4>)
     }
+
+    if(loading){
+        return(<p>Loading...</p>)
+      }
 
   return (
     <div>

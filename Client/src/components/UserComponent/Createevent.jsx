@@ -32,12 +32,20 @@ function Createevent() {
   let[detail,setDetail]=useState("");
   let[fileInputState,setFileInputState]=useState("");
   let[previewSource,setPreviewSource]=useState("");
+  let[loading,setLoading]=useState(false);
+  let[pictureError,setPictureError]=useState(false);
+  let[addressError,setAddressError]=useState(false);
 
 
   //define a function to call when the form is submitted
   async function EventSubmit(e){
     e.preventDefault();
-    if(!previewSource) return;
+    setPictureError(false);setAddressError(false);
+    if(!previewSource || !title || !eventDate || !eventTime || !street || !city || !eventState || !zipCode || !detail){
+       return(
+      setPictureError(true)
+    )}
+    setLoading(true)
     try {
       let response= await fetch(API_Link+"events",{
         method: "POST",
@@ -66,9 +74,13 @@ function Createevent() {
       if(result.id){
         navigate(`/event/${result.id}`,{replace:true})
       }
+      if(result.message=="Address not found for geocoding."){
+        setAddressError(true);
+      }
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   }
 
   
@@ -77,6 +89,9 @@ function Createevent() {
     return(
       <h2>Login or register to create event</h2>
     )
+  }
+  if(loading){
+    return(<p>Loading...</p>)
   }
 
   let handleFileInputChange=(e)=>{
@@ -98,6 +113,8 @@ function Createevent() {
 
     <div>
       <h3>Create an Event!</h3>
+      {pictureError && <p>All field needs to be filled out. And do not forget to attach a picture</p>}
+      {addressError && <p>Enter a valid address.</p>}
       {previewSource && <img src={previewSource} height={200} width={250}/>}
       <form onSubmit={EventSubmit}>
         <label>Title: <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)} /></label><br />
@@ -121,7 +138,7 @@ function Createevent() {
         <label>Zip Code: <input type="number" value={zipCode} onChange={(e)=>setZipCode(e.target.value)} /></label><br />
         <label>Maximum Attendees: <input type="number" value={maxAttendees} min={1} onChange={(e)=>setMaxAttendees(e.target.value)}/></label><br />
         <label>Detail: <textarea rows={4} cols={50} value={detail} onChange={(e)=>setDetail(e.target.value)} /></label><br />
-        <label> Picture: <input name="eventPicture" type="file"  accept='.png,.jpeg,.jpg'  value={fileInputState} onChange={handleFileInputChange}/></label><br />
+        <label> Picture: <input name="eventPicture" type="file"  accept='.png,.jpeg,.jpg'  value={fileInputState} onChange={handleFileInputChange}/></label><br />        
         <button className="btn" type='submit'>Submit</button>
         {/* <button onClick={(e)=>EventSubmit(e)}>Submit</button> */}
       </form>
