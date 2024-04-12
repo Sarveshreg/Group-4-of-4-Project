@@ -13,7 +13,7 @@ function PasswordReset() {
     let[tooShort,setTooShort]=useState(false);
     let navigate=useNavigate();
     let API_Link=import.meta.env.VITE_API_LINK;
-    let[otpError,setOtpError]=useState(flase)
+    let[otpError,setOtpError]=useState(false)
 
     let sendEmail=async()=>{
         setOtpError(true)
