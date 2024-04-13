@@ -194,6 +194,10 @@ p {
   color: #ab4646;
   padding: 1rem;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
 }
 
 .active{
